@@ -1,32 +1,30 @@
+from core.template_header import *
 from core.pushover_alert import send_alert
-import os
-import traceback
+
+def reflect(tag, message):
+    log = f"{tag} {message}"
+    print(f"[REFLECT] {log}")
+    send_alert(log, title=tag.strip("[]"))
 
 def wrap_execution(func):
     def wrapper(*args, **kwargs):
-        name = os.path.basename(func.__code__.co_filename)
         try:
-            result = func(*args, **kwargs)
-            msg = f"✅ {name} — `{func.__name__}` executed successfully."
-            print(f"[REFLECT] {msg}")
-            send_alert(msg, title="ASZA Success")
-            return result
+            return func(*args, **kwargs)
         except Exception as e:
-            tb = traceback.format_exc()
-            msg = f"❌ {name} — Error in `{func.__name__}`:\n{str(e)}"
-            print(f"[ERROR] {msg}")
-            print(tb)
-            send_alert(f"{msg}\n\n{tb}", title="ASZA Failure")
-            return None
+            reflect("[ERROR]", f"{func.__name__} — {e}")
+            raise
     return wrapper
 
-def with_reflection(message):
+def with_reflection(message="Function executed"):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            name = os.path.basename(func.__code__.co_filename)
-            reflect_msg = f"[NOTICE] {name} — {message}"
-            print(f"[REFLECT] {reflect_msg}")
-            send_alert(reflect_msg, title="ASZA Notice")
-            return func(*args, **kwargs)
+            reflect("[NOTICE]", f"{func.__name__} — {message}")
+            try:
+                result = func(*args, **kwargs)
+                reflect("[REFLECT]", f"{func.__name__} executed successfully.")
+                return result
+            except Exception as e:
+                reflect("[ERROR]", f"{func.__name__} — Error in `{func.__name__}`:\n{e}")
+                raise
         return wrapper
     return decorator

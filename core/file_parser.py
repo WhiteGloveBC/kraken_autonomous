@@ -1,21 +1,21 @@
+from core.template_header import *
+from core.wrapper import wrap_execution
 
-def parse_python_file(file_path, base):
-    with file_path.open("r", encoding="utf-8", errors="ignore") as f:
-        lines = f.readlines()
+@wrap_execution
+def get_arg(index, default=None):
+    try:
+        return sys.argv[index]
+    except IndexError:
+        return default
 
-    summary = {
-        "filename": str(file_path.relative_to(base)),
-        "type": ".py",
-        "functions": [],
-        "description": ""
-    }
-
-    for line in lines:
-        line = line.strip()
-        if line.startswith("def "):
-            fn = line.split("def ")[1].split("(")[0]
-            summary["functions"].append(fn)
-        elif line.lower().startswith("print(") or "description" in line.lower():
-            summary["description"] = line.replace("print(", "").replace(")", "").strip("'"")
-
+@wrap_execution
+def parse_file_summary(path):
+    if not os.path.exists(path):
+        return None
+    summary = {"filename": os.path.basename(path), "description": None}
+    with open(path) as f:
+        for line in f:
+            if "print(" in line:
+                summary["description"] = line.replace("print(", "").replace(")", "").strip(" '\"")
+                break
     return summary

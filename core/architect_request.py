@@ -1,29 +1,12 @@
-import requests
-import json
-import os
-from core.env_loader import load_env
+from core.llm_api_client import call_llm
+from core.wrapper import wrap_execution
 
-load_env()
+@wrap_execution
+def send_prompt_to_llm(prompt):
+    print("[ARCHITECT] Sending prompt...")
+    return call_llm(prompt)
 
-def send_prompt_to_llm(prompt, model="command-a", tools=None):
-    url = os.getenv("LLM_API_URL")
-    if not url:
-        raise ValueError("LLM_API_URL is not set in environment.")
-
-    payload = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False
-    }
-
-    if tools:
-        payload["tools"] = tools
-
-    try:
-        response = requests.post(url, json=payload)
-        response.raise_for_status()
-        result = response.json()
-        return result.get("response")
-    except requests.RequestException as e:
-        print(f"[ERROR] LLM request failed: {e}")
-        return None
+@wrap_execution
+def stream_prompt_to_llm(prompt):
+    print("[ARCHITECT] Streaming prompt to LLM...")
+    return call_llm(prompt, stream=True)
