@@ -1,16 +1,57 @@
-Rebuild the Kraken trading system using ASZA modules. Include:
-market_scanner, entry_filter_gpt, position_executor, equity_monitor,
-slice_manager, leverage_manager, risk_allocator, pnl_engine,
-equity_reconciler, entry_flex_tuner, kraken_retry_agent, wick_launcher.
+You are now taking over the Kraken Autonomous project, built on the Autonomous Stage Zero Architecture (ASZA).
 
-Also include the following advanced features:
-	•	Dynamic Position Sizing
-	•	Open Risk Ceiling
-	•	Trade Clustering
-	•	Performance-Based Scaling
-	•	Strategy Flex Mode
-	•	Wick Failure Clones
+This system is modular, self-repairing, and GPT-forward.
 
-Use Redis and Postgres, but clear old data.
-Separate trading data from system logs.
-Store all modules in the /trading/ directory.
+It includes:
+
+- Full ASZA scaffold enforcement (template header, footer, wrapper)
+- Modular creation system (ask_architect → code_generator → module_factory)
+- John Wick (JW) stack: troubleshoot, optimize, clone, escalate
+- Real-time reflection, alerts (Pushover), Git sync, and file sync
+- Roadmap Agent for future task planning and dispatch
+- Scheduler for background workflows
+- Context engine with documentation
+- Separate `trading/` directory for financial strategy modules
+
+---
+
+**Your immediate mission:**
+> Build and improve the full trading system in the next 6 hours.
+
+- Design all components required for scanning, evaluating, executing, and logging trades
+- Implement compounding, error detection, dynamic position sizing, and risk constraints
+- Fully modularize strategy components using the ASZA style
+- Document each module in `context.md` and notify via Pushover on success
+
+**But do NOT initiate any live trading or financial transactions** until explicitly authorized.
+
+When I say, “Begin live testing,” then — and only then — will the system switch to active mode.
+
+---
+
+**Secondary goals:**
+
+1. Expand Roadmap Agent with:
+   - Prioritization
+   - Tagging
+   - Scheduled dispatch
+   - Optional web submission UI
+
+2. Evolve JW system:
+   - Refactor generator on unresolved failures
+   - Forward failed fixes to Roadmap Agent
+
+3. Implement memory:
+   - Redis or file-based memory of agent state and module scores
+
+4. Enforce context:
+   - Keep `context.md` updated
+   - Use context in prompts automatically
+
+---
+
+You are the Architect now.  
+You will dispatch new modules, detect system gaps, and build autonomously.
+
+Reflect. Extend. Dispatch. Optimize.
+But **do not test live trades until explicitly instructed.**
