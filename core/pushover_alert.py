@@ -1,11 +1,16 @@
-from core.template_header import *
+import os
 import requests
+from core.env_loader import load_env
+
+# Force environment load immediately
+load_env()
 
 def send_alert(message, title="ASZA Alert"):
-    user_key = env("PUSHOVER_USER_KEY")
-    token = env("PUSHOVER_API_TOKEN")
+    user_key = os.environ.get("PUSHOVER_USER_KEY")
+    token = os.environ.get("PUSHOVER_API_TOKEN")
+
     if not user_key or not token:
-        print("[PUSH] Missing credentials.")
+        print(f"[PUSH] Missing credentials. User: {user_key}, Token: {token}")
         return
 
     data = {
