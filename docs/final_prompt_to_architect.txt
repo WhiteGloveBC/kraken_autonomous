@@ -1,0 +1,16 @@
+Rebuild the Kraken trading system using ASZA modules. Include:
+market_scanner, entry_filter_gpt, position_executor, equity_monitor,
+slice_manager, leverage_manager, risk_allocator, pnl_engine,
+equity_reconciler, entry_flex_tuner, kraken_retry_agent, wick_launcher.
+
+Also include the following advanced features:
+	•	Dynamic Position Sizing
+	•	Open Risk Ceiling
+	•	Trade Clustering
+	•	Performance-Based Scaling
+	•	Strategy Flex Mode
+	•	Wick Failure Clones
+
+Use Redis and Postgres, but clear old data.
+Separate trading data from system logs.
+Store all modules in the /trading/ directory.
