@@ -4,8 +4,8 @@ from core.template_footer import *
 
 @wrap_execution
 def main():
-    reflect("Starting module: {MODULE_NAME}")
-    # [LLM generates code here]
+    reflect("Starting module: {{MODULE_NAME}}")
+    # TODO: implement logic
     finalize()
 
 if __name__ == "__main__":

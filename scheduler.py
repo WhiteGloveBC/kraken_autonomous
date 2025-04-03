@@ -1,12 +1,18 @@
-import schedule
-import time
-import subprocess
+from core.template_header import *
+from core.wrapper import wrap_execution
+from core.template_footer import *
+import time, subprocess
 
-def sync():
-    subprocess.call(["python", "codebase_sync.py"])
+@wrap_execution
+def schedule():
+    reflect("Scheduler active. Running every 15 minutes.")
+    while True:
+        subprocess.run(["python", "core/troubleshooter_jw.py"])
+        subprocess.run(["python", "core/optimizer_jw.py"])
+        subprocess.run(["python", "workflows/codebase_sync.py"])
+        reflect("Cycle complete. Sleeping 15 minutes.")
+        time.sleep(900)  # 15 minutes
+    finalize()
 
-schedule.every(10).minutes.do(sync)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+if __name__ == "__main__":
+    schedule()
