@@ -1,8 +1,10 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+from core.file_parser import get_arg
 from core.template_header import *
 from core.wrapper import wrap_execution
+from subprocess import run
 
 @wrap_execution
 def push_changes(msg="ASZA commit"):

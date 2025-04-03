@@ -1,23 +1,19 @@
 from core.template_header import *
 from core.wrapper import wrap_execution
-from core.template_footer import *
-import os
+import re
 
 @wrap_execution
 def create_module(name):
-    filename = f"{name}.py"
+    # Clean and shorten name
+    clean = re.sub(r'[^\w\d_\- ]+', '', name).strip().replace(" ", "_")
+    truncated = clean[:40].lower() or "module"
+    filename = f"{truncated}.py"
+
     if os.path.exists(filename):
-        reflect(f"{filename} already exists.")
+        print(f"[SKIP] Module {filename} already exists.")
         return
 
-    with open("core/module_template.py") as template:
-        content = template.read().replace("{{MODULE_NAME}}", name)
     with open(filename, "w") as f:
-        f.write(content)
+        f.write(f'print("Module {name} created.")\n')
 
-    reflect(f"Module {filename} created.")
-    finalize()
-
-if __name__ == "__main__":
-    module_name = get_arg(1, "new_module")
-    create_module(module_name)
+    print(f"[REFLECT] Module {filename} created.")

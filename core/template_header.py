@@ -1,16 +1,13 @@
-import os, sys, subprocess
+import os, sys
+from datetime import datetime
 
-def env(key, default=None):
-    return os.getenv(key, default)
+# Add project root to sys.path if not already added
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-def run(cmd):
-    subprocess.run(cmd, check=True)
+from core.env_loader import load_env
+from core.reflection import reflect
 
-def reflect(message):
-    print(f"[REFLECT] {message}")
-
-def get_arg(index, default=None):
-    try:
-        return sys.argv[index]
-    except IndexError:
-        return default
+# Load environment variables
+load_env()

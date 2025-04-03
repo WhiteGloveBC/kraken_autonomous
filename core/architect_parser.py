@@ -1,18 +1,24 @@
-from core.wrapper import with_reflection
+from core.template_header import *
+from core.wrapper import wrap_execution
+import json
 
-@with_reflection
-def parse_module_list(raw):
-    modules = []
-    for line in raw.split("\n"):
-        if "-" in line and ":" in line:
-            try:
-                _, rest = line.split("-", 1)
-                func, desc = rest.strip().split(":", 1)
-                modules.append({
-                    "filename": f"{func.strip()}.py",
-                    "function": func.strip(),
-                    "description": desc.strip()
-                })
-            except:
-                continue
-    return modules
+@wrap_execution
+def parse_module_list(response):
+    if not response:
+        print("[PARSER] Empty response from LLM.")
+        return []
+
+    try:
+        data = json.loads(response)
+        if isinstance(data, list):
+            return data
+        elif isinstance(data, dict) and "modules" in data:
+            return data["modules"]
+        else:
+            print("[PARSER] Unexpected structure:", data)
+            return []
+    except json.JSONDecodeError:
+        # fallback: split raw string into lines
+        lines = response.strip().splitlines()
+        modules = [line.strip("-• ").strip() for line in lines if line.strip()]
+        return modules

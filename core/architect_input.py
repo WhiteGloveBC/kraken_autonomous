@@ -7,4 +7,8 @@ def get_prompt(interactive=True):
     if interactive:
         return input("What do you want the Architect to do?\n> ")
     else:
-        return get_arg(1, None)
+        path = "docs/final_prompt_to_architect.txt"
+        if os.path.exists(path):
+            with open(path) as f:
+                return f.read().strip()
+        return get_arg(1, "")

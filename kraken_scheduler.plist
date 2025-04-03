@@ -1,0 +1,30 @@
+# FILE: ~/Library/LaunchAgents/kraken_scheduler.plist
+#
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.kraken.scheduler</string>
+
+    <key>ProgramArguments</key>
+    <array>
+      <string>/bin/bash</string>
+      <string>-c</string>
+      <string>source /Users/Nick/Documents/AI/kraken_autonomous/venv/bin/activate && python /Users/Nick/Documents/AI/kraken_autonomous/scheduler.py</string>
+    </array>
+
+    <key>StartInterval</key>
+    <integer>300</integer> <!-- 5 minutes -->
+
+    <key>StandardOutPath</key>
+    <string>/tmp/kraken_scheduler.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/kraken_scheduler.err</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+  </dict>
+</plist>
