@@ -1,69 +1,83 @@
-# ASZA - Lessons Learned & Enforcement Summary
-
-## 1. Simplicity Is Everything
-- Most failures came from complexity, not logic.
-- Black-box subprocesses, silent errors, and config sprawl were major pain points.
-- Solution: all ASZA modules must log, wrap, and reflect visibly.
-
-## 2. Every File Must Be Modular, Predictable, and Traceable
-
-| Pattern            | Enforced? | How Enforced                        |
-|--------------------|-----------|-------------------------------------|
-| 10-line max logic  | ✅         | Auto-splits via module_factory      |
-| Reflection logs    | ✅         | `reflect()` required in template    |
-| Execution wrapper  | ✅         | `@wrap_execution` mandatory         |
-| Final log signal   | ✅         | `finalize()` from `template_footer` |
-| Environment loading| ✅         | via `env_loader` + `template_header` |
-| CLI args w/default | ✅         | `get_arg()` from header enforced    |
-
-These are now scaffolded by default in all tools.
-
-## 3. Push, Logs, and API Must Always Reflect State
-- `git_pusher.py` upgraded to reflect success/failure
-- `wrap_execution` added to catch and reflect errors
-- GPT, LLM API clients, and even system scripts must emit feedback
-
-## 4. Every Tool Will Be Replaceable
-ASZA modules:
-- Are short
-- Fully wrapped
-- Environment-aware
-- Instantly regenerable
-
-This means tools are **disposable and self-healing**, if built properly.
-
-## 5. Automation Without Control Fails
-GPT-based generation often fails without:
-- Reflection of errors
-- Modular generation
-- Reusable patterns
-
-ASZA fixes that via:
-- Shared wrappers
-- Templates
-- Auto-reflecting modules
-- Logging, wrapping, and enforcing patterns on creation
-
-## 6. Future Enforcement Targets
-
-| Target Area         | Enforcement Needed        | Status |
-|---------------------|---------------------------|--------|
-| Legacy tools        | Must rewrap + reflect     | Architect will handle |
-| File generator      | Must use ASZA patterns    | TODO |
-| GPT code generation | Auto-wrap, auto-finalize  | Enforced |
-| Workflow chains     | Must reflect all progress | In progress |
-| System setup tools  | Need final reflection     | Scheduled |
+# ASZA — Lessons Learned (Kraken Autonomous Build)
 
 ---
 
-## Final Reflection
+## 1. Complexity Must Be Deferred
 
-ASZA is now:
-- Modular  
-- Traceable  
-- Recoverable  
-- Upgradeable  
-- Reflection-first  
-- Architect-ready
+- Premature integration of Postgres, Redis, and LLM routers caused friction.
+- The successful pivot was to begin with zero external services.
+- Flat files, single purpose modules, and CLI-only tools allowed rapid testing.
 
-We’ve moved from writing software to writing systems that write software.
+---
+
+## 2. GPT Needs a Reliable Context System
+
+- LLMs forget context unless enforced via memory or structured prompt generation.
+- Reflection, context files, and markdown history became critical.
+- ASZA enforces structure that keeps agents focused and grounded.
+
+---
+
+## 3. Placeholder Logic Wastes Time
+
+- Placeholder code creates the illusion of progress but increases friction later.
+- John Wick (JW) was rebuilt with **fully functional logic** from the start.
+- Every module must ship with a clear, testable output or it is restructured.
+
+---
+
+## 4. Self-Repairing Systems Require Feedback Loops
+
+- Reflection alone is not enough — it must **trigger behavior**.
+- `wrap_execution` and `send_alert` enforce visibility and reaction.
+- JW now escalates clone counts, creates fixes, and optimizes based on logs.
+
+---
+
+## 5. Modular Enforcement Reduces Refactors
+
+- The template system (`template_header`, `wrapper`, `footer`) ensures consistency.
+- Updating global behavior is now a **one-file change**.
+- Every new module instantly complies with alerts, logging, and env behavior.
+
+---
+
+## 6. Pushover Integration Changed Everything
+
+- Real-time feedback revealed system flaws quickly.
+- Alerts made the system feel alive — and made issues visible immediately.
+- A powerful trigger loop: **code → run → reflect → alert → optimize**
+
+---
+
+## 7. GPT is Architect, Not Worker
+
+- GPT is used to **plan and structure modules**.
+- Actual code generation is routed to secondary models.
+- GPT-4 (and Command A) are strategic — not the front-line builder.
+
+---
+
+## 8. John Wick Is a Required Component
+
+- Passive systems fail silently. JW is an aggressive, parallel-thinking engine.
+- JW components handle:
+  - Broken module repair
+  - Strategy compounding
+  - Cloning and escalation
+- JW enables autonomous survival and progress.
+
+---
+
+## 9. Git + Scheduler Close the Loop
+
+- Git automation ensures version control for every improvement.
+- Scheduler runs JW + sync every 15 minutes.
+- These complete the system — **build, reflect, alert, store, repeat.**
+
+---
+
+## 10. This Is Not a Script. It's a System.
+
+- ASZA is a philosophy and an architecture, not just code.
+- It brings modular development, agentic evolution, and infrastructure control into one loop.
